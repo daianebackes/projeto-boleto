@@ -3,6 +3,7 @@ package com.backes.desafio.controllers;
 import com.backes.desafio.dtos.NovoBoletoDto;
 import com.backes.desafio.dtos.RetornoNovoBoletoDto;
 import com.backes.desafio.services.BoletoService;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,13 @@ public class BoletoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveBoleto(@RequestBody @Valid NovoBoletoDto novoBoletoDto) {
+    public ResponseEntity saveBoleto(@RequestBody @Valid NovoBoletoDto novoBoletoDto) {
         RetornoNovoBoletoDto retornoNovoBoleto = boletoService.salvarBoleto(novoBoletoDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(retornoNovoBoleto);
+    }
+
+    @GetMapping
+    public ResponseEntity listarTodosBoletos () {
+        return ResponseEntity.status(HttpStatus.OK).body(boletoService.buscarTodos());
     }
 }
